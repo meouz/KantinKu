@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="-50dp"
-        android:layout_marginTop="-272dp"
+        android:layout_marginTop="-275dp"
         android:layout_marginEnd="-50dp"
         android:src="@drawable/star"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,8 +77,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textPersonName"
+            android:paddingVertical="13dp"
             android:textColor="@color/black"
             android:textColorHint="@color/neutral_400" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -102,20 +103,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Kata Sandi"
+            android:hint="@string/kata_sandi"
             android:inputType="textPassword"
+            android:paddingVertical="13dp"
+            android:textColor="@color/black"
             android:textColorHint="@color/neutral_400" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnLogIn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/button"
         android:fontFamily="@font/poppins_bold"
-        android:text="Masuk"
+        android:text="@string/masuk"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,9 +128,9 @@
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
         android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginLeft="16dp"
-        android:background="@color/neutral_400"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        app:dividerColor="@color/neutral_400"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,9 +151,9 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="0dp"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/neutral_400"
+        app:dividerColor="@color/neutral_400"
         app:layout_constraintBottom_toBottomOf="@id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
@@ -160,6 +163,7 @@
         android:id="@+id/signGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:background="@drawable/border"
         android:backgroundTint="@null"
         android:paddingHorizontal="20dp"
@@ -177,6 +181,7 @@
         android:background="@drawable/border"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
+        android:src="@drawable/googleg_standard_color_18"
         app:layout_constraintEnd_toStartOf="@+id/signTweeter"
         app:layout_constraintStart_toEndOf="@+id/signGoogle"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -185,9 +190,11 @@
         android:id="@+id/signTweeter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/border"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
+        android:src="@drawable/googleg_standard_color_18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/signFacebook"
         app:layout_constraintTop_toTopOf="@+id/signFacebook" />
@@ -205,11 +212,11 @@
         app:layout_constraintTop_toBottomOf="@+id/signFacebook" />
 
     <TextView
-        android:id="@+id/tvRegister"
+        android:id="@+id/tvGoRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Daftar"
+        android:text="@string/daftar"
         android:textColor="@color/primary_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
