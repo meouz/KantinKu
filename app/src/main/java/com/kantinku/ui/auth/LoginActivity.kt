@@ -16,6 +16,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.kantinku.R
 import com.kantinku.databinding.ActivityLoginBinding
 import com.kantinku.ui.SplashScreenActivity
+import com.kantinku.ui.homepage.HomeActivity
 import com.raion.hackjam.utils.PrefManager
 
 class LoginActivity : AppCompatActivity() {
@@ -36,10 +37,10 @@ class LoginActivity : AppCompatActivity() {
         
         prefManager = PrefManager(this)
         
-        val email = binding.etEmail.text?.trim()
-        val password = binding.etPassword.text?.trim()
-        
         binding.btnLogIn.setOnClickListener {
+            val email = binding.etEmail.text?.trim()
+            val password = binding.etPassword.text?.trim()
+            
             Log.d("LoginActivity", "Login button clicked")
             viewModel.login()
         }
@@ -48,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d("LoginActivity", "Register button clicked")
             intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish()
         }
         
         binding.signGoogle.setOnClickListener {
@@ -65,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
     
     // signInGoogle() function
     private fun signInGoogle() {
-        
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, reqCode)
     }
@@ -100,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 prefManager.setEmail(account.email.toString())
                 prefManager.setUsername(account.displayName.toString())
                 
-                val intent = Intent(this, SplashScreenActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }

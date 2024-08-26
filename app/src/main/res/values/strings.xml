@@ -8,4 +8,8 @@
     <string name="kata_sandi">Kata Sandi</string>
     <string name="konfirmasi_kata_sandi">Konfirmasi Kata Sandi</string>
     <string name="atau_masuk_dengan">atau masuk dengan</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

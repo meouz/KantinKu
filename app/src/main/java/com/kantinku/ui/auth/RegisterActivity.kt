@@ -2,13 +2,8 @@ package com.kantinku.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.textfield.TextInputEditText
-import com.kantinku.R
 import com.kantinku.data.User
 import com.kantinku.databinding.ActivityRegisterBinding
 
@@ -23,16 +18,27 @@ class RegisterActivity : AppCompatActivity() {
         _binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        binding.btnLogIn.setOnClickListener{
+        binding.btnRegister.setOnClickListener {
             // Get the email, password, and confirm password
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val confirmPassword = binding.etConfirmPassword.text.toString().trim()
             
-            val user = User(email, password)
-            Log.d("RegisterActivity", user.toString())
+            // validate user input
+            if (!isEmailValid(email)) {
+                return@setOnClickListener
+            }
             
-            // Register the user
+            if (!isPasswordValid(password)) {
+                return@setOnClickListener
+            }
+            
+            if (!isSame(password, confirmPassword)) {
+                return@setOnClickListener
+            }
+            
+            // register user
+            val user = User(email, password)
             viewModel.register(user, password)
         }
         
@@ -42,5 +48,17 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+    
+    private fun isEmailValid(email: String): Boolean {
+        return email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+    
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length < 8 && password.isEmpty()
+    }
+    
+    private fun isSame(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
     }
 }
