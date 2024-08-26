@@ -44,10 +44,10 @@ class LoginActivity : AppCompatActivity() {
             viewModel.login()
         }
         
-        binding.tvRegister.setOnClickListener {
-            finish()
+        binding.tvGoRegister.setOnClickListener {
             Log.d("LoginActivity", "Register button clicked")
-            startActivity(Intent(this, RegisterActivity::class.java))
+            intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
         
         binding.signGoogle.setOnClickListener {
