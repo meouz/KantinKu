@@ -64,4 +64,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.googleid)
+    
+    //Image or page Dot Indicator
+    implementation(libs.dotsindicator)
 }
