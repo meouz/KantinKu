@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,6 +20,8 @@ import com.kantinku.databinding.ActivityLoginBinding
 import com.kantinku.ui.SplashScreenActivity
 import com.kantinku.ui.homepage.HomeActivity
 import com.raion.hackjam.utils.PrefManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLoginBinding
@@ -38,11 +42,24 @@ class LoginActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         
         binding.btnLogIn.setOnClickListener {
-            val email = binding.etEmail.text?.trim()
-            val password = binding.etPassword.text?.trim()
+            val email = binding.etEmail.text?.trim().toString()
+            val password = binding.etPassword.text?.trim().toString()
+            
+            Log.d("user", "email $email password $password")
             
             Log.d("LoginActivity", "Login button clicked")
-            viewModel.login()
+            viewModel.login(email, password)
+        }
+        
+        viewModel.loginStatus.observe(this) { isSuccess ->
+            if (isSuccess) {
+                finish()
+                intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+            } else {
+                Log.d("LoginActivity", "Login failed")
+                message("Login failed")
+            }
         }
         
         binding.tvGoRegister.setOnClickListener {
@@ -100,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 prefManager.setEmail(account.email.toString())
                 prefManager.setUsername(account.displayName.toString())
+                prefManager.setLogin(true)
                 
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
@@ -110,9 +128,13 @@ class LoginActivity : AppCompatActivity() {
     
     override fun onStart() {
         super.onStart()
-        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+        if (GoogleSignIn.getLastSignedInAccount(this) != null || prefManager.isLogin()) {
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
+    }
+    
+    private fun message(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

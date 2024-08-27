@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
-import com.kantinku.data.User
+import com.kantinku.data.UserData
 import com.kantinku.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             
             // register user
-            val user = User(email, password)
+            val user = UserData(email, password)
             viewModel.register(user, password)
         }
         

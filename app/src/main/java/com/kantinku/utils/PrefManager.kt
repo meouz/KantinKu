@@ -35,4 +35,8 @@ class PrefManager(var context: Context) {
         editor.putString(EMAIL, email)
         editor.commit()
     }
+    
+    fun isLogin(): Boolean{
+        return pref.getBoolean(isLogin, false)
+    }
 }
