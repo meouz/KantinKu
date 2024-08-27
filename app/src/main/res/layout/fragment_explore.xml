@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".ui.homepage.explore.ExploreFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            app:dotsClickable="false"
+            app:dotsColor="@color/neutral_400"
+            app:dotsSize="10dp"
+            app:dotsSpacing="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:selectedDotColor="@color/primary_500" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommendationRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/shopRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewPager"
+            tools:listitem="@layout/recommendation_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recommendationRecyclerView"
+            tools:listitem="@layout/shop_item_adapter" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
