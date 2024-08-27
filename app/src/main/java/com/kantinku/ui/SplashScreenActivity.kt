@@ -1,20 +1,19 @@
 package com.kantinku.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.kantinku.R
 import com.kantinku.ui.auth.LoginActivity
-import com.kantinku.ui.forgotpass.ForgotPassActivateActivity
+import com.kantinku.ui.forgotpass.ForgotPassEmailActivity
 
-
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
