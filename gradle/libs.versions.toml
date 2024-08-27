@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.0"
 credentials = "1.2.2"
+dotsindicator = "4.3"
 googleid = "1.1.1"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -24,6 +25,7 @@ navigationUiKtx = "2.7.7"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
