@@ -67,4 +67,8 @@ dependencies {
     
     //Image or page Dot Indicator
     implementation(libs.dotsindicator)
+    
+    //Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 }
