@@ -18,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+        
         setContentView(binding.root)
         
         loadFragment(ExploreFragment())
@@ -25,16 +26,16 @@ class HomeActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNav)!!
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> {
+                R.id.explore -> {
                     loadFragment(ExploreFragment())
                     true
                 }
-                R.id.message -> {
-                    loadFragment(HistoryFragment())
+                R.id.order -> {
+                    loadFragment(OrderFragment())
                     true
                 }
-                R.id.settings -> {
-                    loadFragment(OrderFragment())
+                R.id.receipt -> {
+                    loadFragment(HistoryFragment())
                     true
                 }
                 else -> {

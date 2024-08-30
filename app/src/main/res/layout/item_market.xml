@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="86dp"
+        android:layout_height="106dp"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginVertical="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/white"
+                android:importantForAccessibility="no"
+                android:importantForAutofill="yes"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="11dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="10% off"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="34dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="28dp"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/primary_500"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="@+id/cardView2">
+
+        <TextView
+            android:id="@+id/ratingCount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="2dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="4.9"
+            android:textColor="@color/white"
+            android:textSize="8dp"
+            app:drawableStartCompat="@drawable/rating_star" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/shopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Amazing Mie"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/moneyBag1"
+        app:layout_constraintStart_toEndOf="@+id/cardView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/moneyBag1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/money_bag_dollar"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@+id/shopName"
+        app:layout_constraintTop_toBottomOf="@+id/shopName" />
+
+    <ImageView
+        android:id="@+id/moneyBag2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/money_bag_dollar"
+        app:layout_constraintStart_toEndOf="@+id/moneyBag1"
+        app:layout_constraintTop_toTopOf="@+id/moneyBag1" />
+
+    <ImageView
+        android:id="@+id/moneyBag3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/money_bag_dollar"
+        app:layout_constraintStart_toEndOf="@+id/moneyBag2"
+        app:layout_constraintTop_toTopOf="@+id/moneyBag1" />
+
+    <ImageView
+        android:id="@+id/moneyBag4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/money_bag_dollar"
+        app:layout_constraintStart_toEndOf="@+id/moneyBag3"
+        app:layout_constraintTop_toTopOf="@+id/moneyBag1"
+        app:tint="@color/money_disabled_blue" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Mie, Makanan"
+        android:textColor="@color/neutral_800"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/moneyBag4"
+        app:layout_constraintTop_toTopOf="@+id/moneyBag1" />
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_marginVertical="8dp"
+        android:contentDescription="@null"
+        android:src="@drawable/dotted_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/moneyBag1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/canBeTaken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Dapat diambil setelah 10 min"
+        android:textColor="@color/neutral_zzz"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/cheapest"
+        app:layout_constraintStart_toStartOf="@+id/moneyBag1"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/cheapest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4.3dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Paling Murah!"
+        android:textColor="@color/warning_500"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/tag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/canBeTaken"
+        app:layout_constraintTop_toBottomOf="@+id/canBeTaken" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,7 @@
-package com.raion.hackjam.utils
+package com.kantinku.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.provider.ContactsContract.CommonDataKinds.Email
 
 const val EMAIL = "email"
 const val USERNAME = "username"
@@ -38,5 +37,14 @@ class PrefManager(var context: Context) {
     
     fun isLogin(): Boolean{
         return pref.getBoolean(isLogin, false)
+    }
+    
+    fun setNew(new: Boolean) {
+        editor.putBoolean("new", new)
+        editor.commit()
+    }
+    
+    fun isNew(): Boolean {
+        return pref.getBoolean("new", true)
     }
 }

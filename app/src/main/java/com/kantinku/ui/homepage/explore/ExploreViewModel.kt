@@ -1,25 +1,21 @@
 package com.kantinku.ui.homepage.explore
 
 import androidx.lifecycle.ViewModel
+import com.kantinku.data.MarketData
 import com.kantinku.domain.usecase.ExploreRepositoryImpl
 
 class ExploreViewModel: ViewModel() {
     private val repository: ExploreRepositoryImpl = ExploreRepositoryImpl()
+    private val markets: List<MarketData> = ArrayList()
     
-//    fun getShops() {
-//        repository.getShopData(
-//            shops = { shopsData ->
-//                // Do something with the data
-//                movieList.clear()
-//                movieList.addAll(dataList)
-//                adapter.notifyDataSetChanged()
-//            },
-//            onSuccess = {
-//                // Do something on success
-//            },
-//            onFailure = {
-//                // Do something on failure
-//            }
-//        )
-//    }
+    fun postMarkets(onComplete: () -> Unit) {
+        repository.getMarkets {
+            (markets as ArrayList).addAll(it)
+            onComplete()
+        }
+    }
+    
+    fun getMarkets(): List<MarketData> {
+        return markets
+    }
 }

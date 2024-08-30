@@ -71,4 +71,8 @@ dependencies {
     //Glide
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
+    
+    // Midtrans
+    implementation(libs.uikit) // sandbox
+    implementation(libs.midtrans.uikit)
 }

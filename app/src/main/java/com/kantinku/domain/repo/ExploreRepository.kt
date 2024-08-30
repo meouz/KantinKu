@@ -1,18 +1,9 @@
 package com.kantinku.domain.repo
 
-import com.kantinku.data.FoodData
-import com.kantinku.data.ShopData
+import com.kantinku.data.MarketData
 
 interface ExploreRepository {
-    fun getShopData(
-        shops: (ArrayList<ShopData>) -> Unit,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit,
-    )
-    
-    fun getShopMenus(
-        menus: List<FoodData>,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit,
+    fun getMarkets(
+        markets: (ArrayList<MarketData>) -> Unit,
     )
 }

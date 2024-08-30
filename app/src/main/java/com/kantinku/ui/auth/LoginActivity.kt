@@ -2,11 +2,8 @@ package com.kantinku.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,11 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kantinku.R
 import com.kantinku.databinding.ActivityLoginBinding
-import com.kantinku.ui.SplashScreenActivity
+import com.kantinku.ui.forgotpass.ForgotPassEmailActivity
 import com.kantinku.ui.homepage.HomeActivity
-import com.raion.hackjam.utils.PrefManager
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.kantinku.utils.PrefManager
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityLoginBinding
@@ -44,10 +39,10 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogIn.setOnClickListener {
             val email = binding.etEmail.text?.trim().toString()
             val password = binding.etPassword.text?.trim().toString()
-            
-            Log.d("user", "email $email password $password")
-            
-            Log.d("LoginActivity", "Login button clicked")
+            if (email.isEmpty() || password.isEmpty()) {
+                message("Email or password is empty")
+                return@setOnClickListener
+            }
             viewModel.login(email, password)
         }
         
@@ -57,19 +52,23 @@ class LoginActivity : AppCompatActivity() {
                 intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
             } else {
-                Log.d("LoginActivity", "Login failed")
                 message("Login failed")
             }
         }
         
         binding.tvGoRegister.setOnClickListener {
-            Log.d("LoginActivity", "Register button clicked")
             intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
         
-        binding.signGoogle.setOnClickListener {
+        binding.tvForgotPassword.setOnClickListener {
+            intent = Intent(this, ForgotPassEmailActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        
+        binding.loginGoogle.setOnClickListener {
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -78,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
             
             signInGoogle()
-            Log.d("LoginActivity", "Google sign in button clicked")
         }
     }
     

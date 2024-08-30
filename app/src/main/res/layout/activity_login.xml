@@ -20,9 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/textView35"
+        app:layout_constraintEnd_toStartOf="@+id/textView35"
+        app:layout_constraintTop_toTopOf="@+id/textView35" />
+
     <TextView
+        android:id="@+id/textView35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="48dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/app_name"
@@ -51,7 +62,7 @@
         android:layout_marginHorizontal="16dp"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/masuk_ke_akun_untuk_melanjutkan"
-        android:textColor="@color/neutral_400"
+        android:textColor="@color/neutral_500"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -66,8 +77,7 @@
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false"
+        app:cursorColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -94,8 +104,9 @@
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false"
+        app:cursorColor="@color/black"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/primary_500"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -109,6 +120,18 @@
             android:textColor="@color/black"
             android:textColorHint="@color/neutral_400" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingVertical="4dp"
+        android:text="@string/lupa_kata_sandi"
+        android:textColor="@color/primary_500"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogIn"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogIn" />
 
     <Button
         android:id="@+id/btnLogIn"
@@ -140,7 +163,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="13dp"
         android:text="atau masuk dengan"
@@ -160,44 +183,44 @@
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <ImageButton
-        android:id="@+id/signGoogle"
+        android:id="@+id/loginGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border_10"
         android:backgroundTint="@null"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
-        android:src="@drawable/googleg_standard_color_18"
-        app:layout_constraintEnd_toStartOf="@+id/signFacebook"
+        android:src="@drawable/google"
+        app:layout_constraintEnd_toStartOf="@+id/loginFacebook"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/signFacebook" />
+        app:layout_constraintTop_toTopOf="@+id/loginFacebook" />
 
     <ImageButton
-        android:id="@+id/signFacebook"
+        android:id="@+id/loginFacebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border_10"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
-        android:src="@drawable/googleg_standard_color_18"
-        app:layout_constraintEnd_toStartOf="@+id/signTweeter"
-        app:layout_constraintStart_toEndOf="@+id/signGoogle"
+        android:src="@drawable/facebook"
+        app:layout_constraintEnd_toStartOf="@+id/loginTweeter"
+        app:layout_constraintStart_toEndOf="@+id/loginGoogle"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageButton
-        android:id="@+id/signTweeter"
+        android:id="@+id/loginTweeter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border_10"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        android:src="@drawable/googleg_standard_color_18"
+        android:paddingVertical="11dp"
+        android:src="@drawable/x"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/signFacebook"
-        app:layout_constraintTop_toTopOf="@+id/signFacebook" />
+        app:layout_constraintStart_toEndOf="@+id/loginFacebook"
+        app:layout_constraintTop_toTopOf="@+id/loginFacebook" />
 
     <TextView
         android:id="@+id/textView4"
@@ -208,8 +231,9 @@
         android:fontFamily="@font/poppins_regular"
         android:text="Belum memiliki akun?"
         android:textColor="@color/neutral_400"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signFacebook" />
+        app:layout_constraintTop_toBottomOf="@+id/loginFacebook" />
 
     <TextView
         android:id="@+id/tvGoRegister"
@@ -218,6 +242,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/daftar"
         android:textColor="@color/primary_500"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toEndOf="@+id/textView4"
