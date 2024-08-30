@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kantinku.R
 import com.kantinku.data.MenuData
 
-class ChildOrderAdapter(private val items: List<MenuData>) :
+class ChildOrderAdapter(private val items: List<MenuData>, var notes: String) :
     RecyclerView.Adapter<ChildOrderAdapter.ViewHolder>() {
     
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,7 +31,7 @@ class ChildOrderAdapter(private val items: List<MenuData>) :
         holder.menuName.text = item.name
         holder.quantity.text = item.quantity.toString() + "x"
         holder.desc.text = item.desc
-//        holder.notes.text = item.notes
+        holder.notes.text = notes
         holder.price.text = (item.price * item.quantity).toString()
         
     }

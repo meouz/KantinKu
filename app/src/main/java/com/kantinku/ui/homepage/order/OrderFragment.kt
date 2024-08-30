@@ -36,11 +36,11 @@ class OrderFragment : Fragment() {
         val userId = auth.currentUser?.uid.toString()
         
         rvOrder = binding.rvOrder
-        rvOrder.adapter = ParentOrderAdapter(viewModel.getData())
+        rvOrder.adapter = ParentOrderAdapter(viewModel.getBasket())
         rvOrder.layoutManager = LinearLayoutManager(requireContext())
         
         viewModel.postData(userId) {
-            if (viewModel.getData().isEmpty()) {
+            if (viewModel.getBasket().isEmpty()) {
                 binding.rvOrder.visibility = View.GONE
                 binding.tvCheck.visibility = View.VISIBLE
                 binding.ivCheck.visibility = View.VISIBLE
