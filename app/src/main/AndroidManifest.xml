@@ -20,9 +20,6 @@
             android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.homepage.basket.BasketActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.basket.BasketConfirmActivity"
             android:exported="false" />
         <activity
