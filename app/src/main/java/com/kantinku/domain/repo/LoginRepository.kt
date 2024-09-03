@@ -2,14 +2,8 @@ package com.kantinku.domain.repo
 
 import com.kantinku.data.UserData
 
-interface AuthRepository {
+interface LoginRepository {
     fun login(
-        user: UserData,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit,
-    )
-    
-    fun register(
         user: UserData,
         onSuccess: () -> Unit,
         onFailure: () -> Unit,
