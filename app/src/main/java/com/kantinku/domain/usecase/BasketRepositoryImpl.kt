@@ -8,12 +8,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kantinku.data.BasketData
 import com.kantinku.data.MenuData
+import com.kantinku.domain.repo.BasketRepository
 import kotlin.random.Random
 
-class BasketRepositoryImpl {
+class BasketRepositoryImpl : BasketRepository {
     private lateinit var db: DatabaseReference
     
-    fun createOrder(
+    override fun createOrder(
         userId: String,
         data: ArrayList<MenuData>,
     ) {
@@ -46,7 +47,7 @@ class BasketRepositoryImpl {
         post.child("status").setValue("Pesanan sudah dikonfirmasi penjual")
     }
     
-    fun getData(
+    override fun getData(
         userId: String,
         menumenu: (BasketData) -> Unit,
     ) {

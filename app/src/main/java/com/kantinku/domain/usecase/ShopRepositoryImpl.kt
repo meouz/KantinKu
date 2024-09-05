@@ -7,11 +7,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kantinku.data.MenuData
+import com.kantinku.domain.repo.ShopRepository
 
-class ShopRepositoryImpl {
+class ShopRepositoryImpl : ShopRepository {
     private lateinit var db: DatabaseReference
     
-    fun getMenuUtama(
+    override fun getMenuUtama(
         shopName: String,
         resp: (ArrayList<MenuData>) -> Unit,
     ) {
@@ -22,7 +23,6 @@ class ShopRepositoryImpl {
                 val dataList = ArrayList<MenuData>()
                 if (snapshot.exists()) {
                     for (dataSnapshot in snapshot.children) {
-                        Log.d("HSUDFHDSUFDSF", dataSnapshot.toString())
                         val image: String =
                             dataSnapshot.child("image").getValue(String::class.java).toString()
                         val name: String =
@@ -58,7 +58,7 @@ class ShopRepositoryImpl {
         })
     }
     
-    fun getMenuTakHabis(
+    override fun getMenuTakHabis(
         shopName: String,
         resp: (ArrayList<MenuData>) -> Unit,
     ) {
@@ -104,7 +104,7 @@ class ShopRepositoryImpl {
         })
     }
     
-    fun getMenuBest(
+    override fun getMenuBest(
         shopName: String,
         resp: (ArrayList<MenuData>) -> Unit,
     ) {
