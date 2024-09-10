@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kantinku.R
-import com.kantinku.data.MarketData
-import kotlin.random.Random
+import com.kantinku.data.ShopData
 
-class RecShopAdapter(private val items: List<MarketData>) :
+class RecShopAdapter(private val items: List<ShopData>) :
     RecyclerView.Adapter<RecShopAdapter.ViewHolder>() {
     
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -50,9 +49,9 @@ class RecShopAdapter(private val items: List<MarketData>) :
     
     override fun getItemCount(): Int = items.size
     
-    fun setOnItemClickListener(listener: (MarketData) -> Unit) {
+    fun setOnItemClickListener(listener: (ShopData) -> Unit) {
         onItemClickListener = listener
     }
     
-    private var onItemClickListener: ((MarketData) -> Unit)? = null
+    private var onItemClickListener: ((ShopData) -> Unit)? = null
 }

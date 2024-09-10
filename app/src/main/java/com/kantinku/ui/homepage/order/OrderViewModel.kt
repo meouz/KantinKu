@@ -25,4 +25,8 @@ class OrderViewModel : ViewModel() {
     fun getBasket(): List<BasketData> {
         return basket
     }
+    
+    fun updateStatus(basketData: BasketData) {
+        repository.updateStatus(basketData)
+    }
 }

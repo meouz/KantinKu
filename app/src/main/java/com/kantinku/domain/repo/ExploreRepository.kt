@@ -1,9 +1,9 @@
 package com.kantinku.domain.repo
 
-import com.kantinku.data.MarketData
+import com.kantinku.data.ShopData
 
 interface ExploreRepository {
-    fun getMarkets(
-        markets: (ArrayList<MarketData>) -> Unit,
+    fun getShop(
+        shops: (ArrayList<ShopData>) -> Unit,
     )
 }

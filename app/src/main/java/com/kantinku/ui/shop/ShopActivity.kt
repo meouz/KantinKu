@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,6 @@ import com.kantinku.R
 import com.kantinku.data.MenuData
 import com.kantinku.databinding.ActivityShopBinding
 import com.kantinku.ui.basket.BasketActivity
-import com.kantinku.ui.shop.ShopViewModel.ShopViewModel.items
-import com.kantinku.ui.shop.ShopViewModel.ShopViewModel.order
 import com.kantinku.ui.shop.component.BestSellerAdapter
 import com.kantinku.ui.shop.component.MenusAdapter
 import com.kantinku.ui.shop.component.NotFinishedAdapter
@@ -28,6 +27,8 @@ class ShopActivity : AppCompatActivity() {
     private lateinit var rvNotFinished: RecyclerView
     private var totalPrice = 0
     
+    private val order = MutableLiveData<List<MenuData>>()
+    
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +36,18 @@ class ShopActivity : AppCompatActivity() {
         _binding = ActivityShopBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        val shopName = intent.getStringExtra("shopName") ?: ""
+        val shopName = intent.getStringExtra("name") ?: ""
         
         Glide.with(this)
             .load(intent.getStringExtra("image"))
             .placeholder(R.drawable.button)
             .into(binding.ivShop)
         binding.shopName.text = shopName
-        binding.tvCategory.text = intent.getStringExtra("category")
-        binding.ratingCount.text = intent.getFloatExtra("ratingCount", 0.0f).toString()
+        binding.tvCategory.text = intent.getStringExtra("type")
+        binding.ratingCount.text = intent.getFloatExtra("ratingCount", 0F).toString()
         binding.rating.text = intent.getFloatExtra("rating", 0.0f).toString()
         binding.tvDistance.text = intent.getStringExtra("distance")
         binding.tvLocation.text = intent.getStringExtra("location")
-        
         binding.likeCount.text = intent.getIntExtra("likeCount", 0).toString()
         
         binding.btnBack.setOnClickListener {
@@ -58,13 +58,17 @@ class ShopActivity : AppCompatActivity() {
         rvBestSeller = binding.rvBestSeller
         rvNotFinished = binding.rvNotFinished
         
-        rvMenus.adapter = MenusAdapter(viewModel.getMenuUtama())
-        rvBestSeller.adapter = BestSellerAdapter(viewModel.getMenuBest())
-        rvNotFinished.adapter = NotFinishedAdapter(viewModel.getMenuTakHabis())
+        rvMenus.adapter = MenusAdapter(viewModel.getMenus())
+        rvBestSeller.adapter = BestSellerAdapter(viewModel.getBestMenus())
+        rvNotFinished.adapter = NotFinishedAdapter(viewModel.getNotFinishedMenus())
         
         rvMenus.layoutManager = LinearLayoutManager(this)
         rvBestSeller.layoutManager = GridLayoutManager(this, 2)
         rvNotFinished.layoutManager = LinearLayoutManager(this)
+        
+        (rvBestSeller.adapter as BestSellerAdapter).setOnItemClickListener {
+            updateBasket(order)
+        }
         
         (rvMenus.adapter as MenusAdapter).setOnItemClickListener {
             updateBasket(order)
@@ -74,44 +78,31 @@ class ShopActivity : AppCompatActivity() {
             updateBasket(order)
         }
         
-        (rvBestSeller.adapter as BestSellerAdapter).setOnItemClickListener {
-            updateBasket(order)
-        }
-        
-        viewModel.postMenuBest(shopName) {
+        viewModel.setMenus(shopName) {
             rvBestSeller.adapter?.notifyDataSetChanged()
-        }
-        
-        viewModel.postMenuUtama(shopName) {
             rvMenus.adapter?.notifyDataSetChanged()
-        }
-        
-        viewModel.postMenuTakHabis(shopName) {
             rvNotFinished.adapter?.notifyDataSetChanged()
         }
         
         binding.cardBasketContent.setOnClickListener {
-            
             val stash = intent
             intent = Intent(this, BasketActivity::class.java)
             intent.putExtra("shopName", stash.getStringExtra("shopName"))
-            intent.putExtra("order", order)
-            
             startActivity(intent)
         }
     }
     
     private fun updateBasket(
-        data: ArrayList<MenuData>,
+        data: MutableLiveData<List<MenuData>>,
     ) {
         totalPrice = 0
         var quantity = 0
-        if (data.isEmpty()) {
+        if (data.value?.isEmpty() == true) {
             binding.cardBasket.visibility = View.GONE
             return
         }
         
-        data.forEach { e ->
+        data.value!!.forEach { e ->
             quantity += e.quantity
             totalPrice += e.quantity * e.price
         }
@@ -120,39 +111,44 @@ class ShopActivity : AppCompatActivity() {
             binding.cardBasket.visibility = View.GONE
             return
         }
+        
         binding.cardBasket.visibility = View.VISIBLE
-        binding.tvItemCount.text = quantity.toString() + " item"
+        binding.tvItemCount.text = "$quantity item"
         binding.tvTotal.text = totalPrice.toString()
     }
     
-    fun increment(category: Int, index: Int) {
-        val item = items[category - 1][index]
-        val existingItem = order.find { it == item }
+    fun increment(index: Int) {
+        val newOrder = viewModel.data.value?.get(index) ?: return
+        val myOrder = order.value?.toMutableList() ?: mutableListOf()
+        val orderExist = myOrder.find { it == newOrder }
         
-        if (existingItem != null) {
-            existingItem.quantity++
+        if (orderExist != null) {
+            orderExist.quantity++
         } else {
-            item.quantity = 1
-            order.add(item)
+            newOrder.quantity++
+            myOrder.add(newOrder)
         }
+        
+        order.value = myOrder
     }
     
-    fun decrement(category: Int, index: Int) {
-        val item = items[category - 1][index]
-        val existingItem = order.find { it == item }
+    fun decrement(index: Int) {
+        val newOrder = viewModel.data.value?.get(index) ?: return
+        val myOrder = order.value?.toMutableList() ?: mutableListOf()
+        val orderExist = myOrder.find { it == newOrder }
         
-        if (existingItem != null) {
-            existingItem.quantity--
-            
-            if (existingItem.quantity == 0) {
-                order.remove(existingItem)
-            }
+        if (orderExist != null) {
+            orderExist.quantity--
+        } else {
+            newOrder.quantity--
+            myOrder.remove(newOrder)
         }
+        
+        order.value = myOrder
     }
     
     override fun onStart() {
         super.onStart()
-        order.clear()
         updateBasket(order)
     }
 }

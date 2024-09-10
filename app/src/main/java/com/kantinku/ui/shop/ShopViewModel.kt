@@ -1,55 +1,39 @@
 package com.kantinku.ui.shop
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kantinku.data.MenuData
 import com.kantinku.domain.usecase.ShopRepositoryImpl
-import com.kantinku.ui.shop.ShopViewModel.ShopViewModel.items
 
 class ShopViewModel : ViewModel() {
     private val repository: ShopRepositoryImpl = ShopRepositoryImpl()
-    private val menusBest: List<MenuData> = ArrayList()
-    private val menusUtama: List<MenuData> = ArrayList()
-    private val menusTakHabis: List<MenuData> = ArrayList()
+    private val _data: MutableLiveData<List<MenuData>> = MutableLiveData()
+    val data: LiveData<List<MenuData>> get() = _data
     
-    object ShopViewModel {
-        var items = mutableListOf<ArrayList<MenuData>>()
-        var order = ArrayList<MenuData>()
-        var orders = mutableListOf(order)
-    }
+    private var bestMenus: List<MenuData> = listOf()
+    private var menus: List<MenuData> = listOf()
+    private var notFinishedMenus: List<MenuData> = listOf()
     
-    fun postMenuUtama(shopName: String, onComplete: () -> Unit) {
-        repository.getMenuUtama(shopName) {
-            (menusUtama as ArrayList).addAll(it)
-            (items as ArrayList).addAll(listOf(it))
+    fun setMenus(shopName: String, onComplete: () -> Unit) {
+        repository.getMenus(shopName) {
+            _data.value = it
+            bestMenus = it.filter { menu -> menu.quality == 1 }
+            menus = it.filter { menu -> menu.quality == 2 }
+            notFinishedMenus = it.filter { menu -> menu.quality == 3 }
             onComplete()
         }
     }
     
-    fun postMenuTakHabis(shopName: String, onComplete: () -> Unit) {
-        repository.getMenuTakHabis(shopName) {
-            (menusTakHabis as ArrayList).addAll(it)
-            (items as ArrayList).addAll(listOf(it))
-            onComplete()
-        }
+    fun getBestMenus(): List<MenuData> {
+            return bestMenus
     }
     
-    fun postMenuBest(shopName: String, onComplete: () -> Unit) {
-        repository.getMenuBest(shopName) {
-            (menusBest as ArrayList).addAll(it)
-            (items as ArrayList).addAll(listOf(it))
-            onComplete()
-        }
+    fun getMenus(): List<MenuData> {
+        return menus
     }
     
-    fun getMenuUtama(): List<MenuData> {
-        return menusUtama
-    }
-    
-    fun getMenuTakHabis(): List<MenuData> {
-        return menusTakHabis
-    }
-    
-    fun getMenuBest(): List<MenuData> {
-        return menusBest
+    fun getNotFinishedMenus(): List<MenuData> {
+        return notFinishedMenus
     }
 }

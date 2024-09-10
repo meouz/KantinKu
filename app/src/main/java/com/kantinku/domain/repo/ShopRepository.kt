@@ -17,4 +17,6 @@ interface ShopRepository {
         shopName: String,
         resp: (ArrayList<MenuData>) -> Unit,
     )
+    
+    fun getMenus(shopName: String, menus: (ArrayList<MenuData>) -> Unit)
 }

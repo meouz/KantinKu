@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class MenuData(
-    val image: String,
     val name: String,
-    val desc: String,
+    val image: String,
+    val description: String,
+    val quality: Int,
     val price: Int,
-    val stock: Int,
     var quantity: Int,
-    val category: Int,
+    var notes: String,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -19,18 +19,18 @@ data class MenuData(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readInt()
+        parcel.readString().toString()
     ) {
     }
     
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(image)
         parcel.writeString(name)
-        parcel.writeString(desc)
+        parcel.writeString(image)
+        parcel.writeString(description)
+        parcel.writeInt(quality)
         parcel.writeInt(price)
-        parcel.writeInt(stock)
         parcel.writeInt(quantity)
-        parcel.writeInt(category)
+        parcel.writeString(notes)
     }
     
     override fun describeContents(): Int {

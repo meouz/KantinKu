@@ -52,6 +52,11 @@ class OrderFragment : Fragment() {
             rvOrder.adapter?.notifyDataSetChanged()
         }
         
+        (rvOrder.adapter as ParentOrderAdapter).setOnItemClickListener {
+            viewModel.updateStatus(it)
+            rvOrder.adapter?.notifyDataSetChanged()
+        }
+        
         return binding.root
     }
 }

@@ -99,4 +99,9 @@ class BasketRepositoryImpl : BasketRepository {
             }
         })
     }
+    
+    override fun updateStatus(basketData: BasketData) {
+        db = FirebaseDatabase.getInstance().reference
+        db.child("transaction").child("status").setValue("Pesanan sudah diterima")
+    }
 }

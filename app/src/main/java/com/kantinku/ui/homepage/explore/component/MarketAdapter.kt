@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kantinku.R
-import com.kantinku.data.MarketData
+import com.kantinku.data.ShopData
 
-class MarketAdapter(private val items: List<MarketData>) :
+class MarketAdapter(private val items: List<ShopData>) :
     RecyclerView.Adapter<MarketAdapter.ViewHolder>() {
     
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -35,10 +35,10 @@ class MarketAdapter(private val items: List<MarketData>) :
     
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.shopName.text = item.shopName
-        holder.discount.text = item.discount
-        holder.category.text = item.category
-        holder.canBeTaken.text = item.canBeTaken
+        holder.shopName.text = item.name
+        holder.discount.text = "${item.discount} % off"
+        holder.category.text = item.type
+        holder.canBeTaken.append(item.waitingTime.toString())
         holder.ratingCount.text = item.ratingCount.toString()
         Glide.with(holder.itemView.context.applicationContext)
             .load(item.image)
@@ -52,9 +52,9 @@ class MarketAdapter(private val items: List<MarketData>) :
     
     override fun getItemCount() = items.size
     
-    fun setOnItemClickListener(listener: (MarketData) -> Unit) {
+    fun setOnItemClickListener(listener: (ShopData) -> Unit) {
         onItemClickListener = listener
     }
     
-    private var onItemClickListener: ((MarketData) -> Unit)? = null
+    private var onItemClickListener: ((ShopData) -> Unit)? = null
 }

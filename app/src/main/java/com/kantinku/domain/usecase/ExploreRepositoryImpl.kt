@@ -6,49 +6,58 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.kantinku.data.MarketData
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.kantinku.data.ShopData
 import com.kantinku.domain.repo.ExploreRepository
 
 class ExploreRepositoryImpl : ExploreRepository {
-    private lateinit var db: DatabaseReference
+    private lateinit var db: FirebaseFirestore
     
-    override fun getMarkets(
-        markets: (ArrayList<MarketData>) -> Unit,
+    override fun getShop(
+        shops: (ArrayList<ShopData>) -> Unit,
     ) {
-        db = FirebaseDatabase.getInstance().reference
-        val shopRef = db.child("shops")
-        shopRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val marketsData = ArrayList<MarketData>()
-                if (snapshot.exists()) {
-                    for (dataSnapshot in snapshot.children) {
-                        val image: String =
-                            dataSnapshot.child("image").getValue(String::class.java).toString()
-                        val name: String =
-                            dataSnapshot.child("name").getValue(String::class.java).toString()
-                        val category: String =
-                            dataSnapshot.child("category").getValue(String::class.java).toString()
-                        val ratingCount: String =
-                            dataSnapshot.child("ratingCount").getValue(String::class.java).toString()
-                        val rating: Float? =
-                            dataSnapshot.child("rating").getValue(Float::class.java)
-                        val canBeTaken: String =
-                            dataSnapshot.child("canBeTaken").getValue(String::class.java).toString()
-                        val discount: String =
-                            dataSnapshot.child("discount").getValue(String::class.java).toString()
-                        val distance: String =
-                            dataSnapshot.child("distance").getValue(String::class.java).toString()
-                        val location: String =
-                            dataSnapshot.child("location").getValue(String::class.java).toString()
-                        marketsData.add(MarketData(image, name,  category,  ratingCount, rating,  canBeTaken, discount, distance, location))
-                    }
-                    markets(marketsData)
+        db = FirebaseFirestore.getInstance()
+        val ref = db.collection("shops")
+        ref.get().addOnSuccessListener { snapshot ->
+            val shop = ArrayList<ShopData>()
+            if (!snapshot.isEmpty) {
+                for (document in snapshot.documents) {
+                    val image = document.getString("image").orEmpty()
+                    val name = document.getString("name").orEmpty()
+                    val rating = document.getDouble("rating")?.toFloat() ?: 0f
+                    val ratingCount = document.getLong("ratingCount")?.toInt() ?: 0
+                    val location = document.getString("location").orEmpty()
+                    val distance = document.getLong("distance")?.toInt() ?: 0
+                    val type = document.getString("type").orEmpty()
+                    val cheapest = document.getBoolean("cheapest") ?: false
+                    val open = document.getBoolean("open") ?: false
+                    val waitingTime = document.getLong("waitingTime")?.toInt() ?: 0
+                    val discount = document.getLong("discount")?.toInt() ?: 0
+                    val queue = document.getLong("queue")?.toInt() ?: 0
+                    val onProcess = document.getLong("onProcess")?.toInt() ?: 0
+                    shop.add(
+                        ShopData(
+                            image,
+                            name,
+                            rating,
+                            ratingCount,
+                            location,
+                            distance,
+                            type,
+                            cheapest,
+                            open,
+                            waitingTime,
+                            discount,
+                            queue,
+                            onProcess
+                        )
+                    )
                 }
+                shops(shop)
             }
-            
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("ExploreRepo" ,"Error: ${error.message}")
-            }
-        })
+        }.addOnFailureListener { error ->
+            Log.d("ExploreRepo", "Error: ${error.message}")
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.kantinku.ui.homepage.order.component
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kantinku.R
 import com.kantinku.data.BasketData
-import com.kantinku.data.MenuData
 
 class ParentOrderAdapter(private val items: List<BasketData>) :
     RecyclerView.Adapter<ParentOrderAdapter.ViewHolder>() {
@@ -21,6 +19,7 @@ class ParentOrderAdapter(private val items: List<BasketData>) :
         val tvWait: TextView = view.findViewById(R.id.tvWait)
         val tvStatus: TextView = view.findViewById(R.id.tvStatus)
         val tvQueue: TextView = view.findViewById(R.id.tvQueue)
+        val pesanDiterima:TextView = view.findViewById(R.id.pesanDiterima)
     }
     
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -34,7 +33,6 @@ class ParentOrderAdapter(private val items: List<BasketData>) :
         val item = items[position]
         var temp = 0
         item.menu.forEach { e ->
-            Log.d("ParentAdapter", e.toString())
             temp += e.quantity * e.price
         }
         holder.rvChild.adapter = ChildOrderAdapter(item.menu, item.notes)
@@ -44,13 +42,16 @@ class ParentOrderAdapter(private val items: List<BasketData>) :
         holder.tvWait.text = item.waitingTime
         holder.tvStatus.text = item.status
         holder.tvQueue.text = item.queue.toString()
+        holder.pesanDiterima.setOnClickListener {
+            onItemClickListener?.invoke(items[position])
+        }
     }
     
     override fun getItemCount() = items.size
     
-    fun setOnItemClickListener(listener: (MenuData) -> Unit) {
+    fun setOnItemClickListener(listener: (BasketData) -> Unit) {
         onItemClickListener = listener
     }
     
-    private var onItemClickListener: ((MenuData) -> Unit)? = null
+    private var onItemClickListener: ((BasketData) -> Unit)? = null
 }

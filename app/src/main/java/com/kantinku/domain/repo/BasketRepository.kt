@@ -13,4 +13,8 @@ interface BasketRepository {
         userId: String,
         menumenu: (BasketData) -> Unit,
     )
+    
+    fun updateStatus(
+        basketData: BasketData,
+    )
 }

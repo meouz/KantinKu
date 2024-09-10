@@ -35,7 +35,7 @@ class PrefManager(var context: Context) {
         editor.commit()
     }
     
-    fun isLogin(): Boolean{
+    fun isLogin(): Boolean {
         return pref.getBoolean(isLogin, false)
     }
     

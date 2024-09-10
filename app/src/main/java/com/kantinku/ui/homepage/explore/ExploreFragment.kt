@@ -2,6 +2,7 @@ package com.kantinku.ui.homepage.explore
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,8 +60,8 @@ class ExploreFragment : Fragment() {
         recommendationRecyclerView = binding.findViewById(R.id.rvRecommendation)
         marketRecyclerView = binding.findViewById(R.id.rvMarket)
         
-        recommendationRecyclerView.adapter = RecShopAdapter(viewModel.getMarkets())
-        marketRecyclerView.adapter = MarketAdapter(viewModel.getMarkets())
+        recommendationRecyclerView.adapter = viewModel.getShops().value?.let { RecShopAdapter(it) }
+        marketRecyclerView.adapter = viewModel.getShops().value?.let { MarketAdapter(it) }
         
         recommendationRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -69,24 +70,26 @@ class ExploreFragment : Fragment() {
         (marketRecyclerView.adapter as MarketAdapter).setOnItemClickListener { item ->
             val intent = Intent(requireContext(), ShopActivity::class.java)
             intent.putExtra("image", item.image)
-            intent.putExtra("shopName", item.shopName)
-            intent.putExtra("category", item.category)
+            intent.putExtra("name", item.name)
+            intent.putExtra("type", item.type)
             intent.putExtra("ratingCount", item.ratingCount)
             intent.putExtra("rating", item.rating)
             
             intent.putExtra("distance", item.distance)
             intent.putExtra("location", item.location)
+            intent.putExtra("id", item.toString())
+            Log.d("ExploreFragment", "ID: $item")
             startActivity(intent)
         }
         (recommendationRecyclerView.adapter as RecShopAdapter).setOnItemClickListener { item ->
             val intent = Intent(requireContext(), ShopActivity::class.java)
             intent.putExtra("image", item.image)
-            intent.putExtra("shopName", item.shopName)
-            intent.putExtra("category", item.category)
+            intent.putExtra("name", item.name)
+            intent.putExtra("type", item.type)
             intent.putExtra("ratingCount", item.ratingCount)
             intent.putExtra("rating", item.rating)
             
-            intent.putExtra("canBeTaken", item.canBeTaken)
+            intent.putExtra("waitingTime", item.waitingTime)
             intent.putExtra("discount", item.discount)
             
             intent.putExtra("distance", item.distance)
@@ -96,7 +99,7 @@ class ExploreFragment : Fragment() {
         
         
         // Call data from view model
-        viewModel.postMarkets {
+        viewModel.setShops {
             marketRecyclerView.adapter?.notifyDataSetChanged()
             recommendationRecyclerView.adapter?.notifyDataSetChanged()
         }
